@@ -1,0 +1,42 @@
+name: Android App Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.0'
+
+      - name: Install Go Mobile
+        run: |
+          go install golang.org/x/mobile/cmd/gomobile@latest
+          gomobile init
+
+      - name: Install Android NDK
+        run: |
+          sudo snap install androidsdk
+          export ANDROID_HOME=$HOME/Android/Sdk
+          export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+          sdkmanager "platforms;android-21" "build-tools;30.0.3"
+
+      - name: Build the app
+        run: |
+          gomobile build -target=android -o TeslaBlueboothKey.apk -androidapi 21 ./main.go
+
+      - name: Upload application
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: TeslaBlueboothKey.apk
+          retention-days: 3
