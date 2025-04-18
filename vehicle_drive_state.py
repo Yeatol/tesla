@@ -9,8 +9,8 @@ async def main():
     vehicle = tesla_bluetooth.vehicles.create(vin)
     device = await vehicle.find_vehicle()
     print(f"Vehicle data for VIN: {vehicle.vin}")
-    for i in range(100):
-        data = await vehicle.vehicle_data(["charge_state", "drive_state"])
+    while True:
+        data = await vehicle.vehicle_data(["drive_state"])
         print(data)
         time.sleep(0.5)
 
