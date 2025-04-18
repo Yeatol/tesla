@@ -1,6 +1,6 @@
 import time
 import asyncio
-from tesla_fleet_api import TeslaBluetooth, BluetoothVehicleData
+from tesla_fleet_api import TeslaBluetooth
 
 async def main():
     vin = "LRWYGCFJ7MC076154"
