@@ -8,8 +8,5 @@ async def main():
     vehicle = tesla_bluetooth.vehicles.create(vin)
     device = await vehicle.find_vehicle()
     print(f"Created VehicleBluetooth instance for VIN: {vehicle.vin}")
-    #data = await vehicle.vehicle_data(["GetDriveState"])
-    #print(f"Vehicle data for VIN: {vehicle.vin}")
-    #print(data)
 
 asyncio.run(main())
